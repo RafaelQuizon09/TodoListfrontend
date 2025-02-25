@@ -52,7 +52,7 @@ export default function Dashboard() {
         };
 
         fetchTodo();
-    }, [userID]); // Dependency on userID
+    }, [userID]);
 
     if (!getToken()) {
         return <Navigate to="/login" />;
