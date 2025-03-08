@@ -1,13 +1,13 @@
 const config = {
-    TOKEN_STORAGE_KEY: 'token', // Key for storing the token
+    TOKEN_STORAGE_KEY: 'token',
     REFRESH_TOKEN_STORAGE_KEY: 'refreshToken',
-    USERID_STORAGE_KEY: 'userId', // Key for storing the user ID
-    USERNAME_STORAGE_KEY: 'username', // Key for storing the username
-    PERMISSION_STORAGE_KEY: 'role', // Key for storing permissions
-    DEFAULT_TOKEN: '', // Default token value
+    USERID_STORAGE_KEY: 'userId',
+    USERNAME_STORAGE_KEY: 'username',
+    PERMISSION_STORAGE_KEY: 'role',
+    DEFAULT_TOKEN: '',
     DEFAULT_REFRESH_TOKEN: '',
-    DEFAULT_ID: '1', // Default ID value
-    DEFAULT_USERNAME: 'guest', // Default username if not logged in
+    DEFAULT_ID: '1',
+    DEFAULT_USERNAME: 'guest',
 };
 
 export const getUserId = () => localStorage.getItem(config.USERID_STORAGE_KEY) || config.DEFAULT_ID;
@@ -26,16 +26,14 @@ export const getUsername = () => localStorage.getItem(config.USERNAME_STORAGE_KE
 export const setUsername = (username) => localStorage.setItem(config.USERNAME_STORAGE_KEY, username);
 export const clearUsername = () => localStorage.removeItem(config.USERNAME_STORAGE_KEY);
 
-
 export const clearAllAuthData = () => {
-    clearToken();
-    clearRefreshToken();
     clearUserId();
     clearUsername();
-
+    clearToken(); // 👈 Add this to make sure access token is cleared
+    clearRefreshToken(); // 👈 This prevents keeping a stale refresh token
 };
 
-export const refreshToken = async() => {
+export const refreshToken = async () => {
     const refresh = getRefreshToken();
     if (!refresh) {
         console.error("No refresh token found.");
@@ -43,7 +41,7 @@ export const refreshToken = async() => {
     }
 
     try {
-        const response = await fetch ('api/refreshToken/', {
+        const response = await fetch('/api/refreshToken/', { // Ensure this is the correct API endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -53,18 +51,19 @@ export const refreshToken = async() => {
 
         if (!response.ok) {
             console.error("Failed to refresh token.");
-            clearAllAuthData
+            clearAllAuthData();
             return null;
         }
+
         const data = await response.json();
         setToken(data.access);
-        setRefreshToken(data.refresh);
-        return data.access;
+        setRefreshToken(data.refresh); // Ensure this is saved
+        return data.access; // 👈 Return new access token
     } catch (error) {
         console.error("Error refreshing token:", error);
         clearAllAuthData();
         return null;
     }
-        };
+};
 
 export default config;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {jwtDecode} from "jwt-decode"; // Install with: npm install jwt-decode
-import { setUserId, setToken, setUsername,getUsername } from "../config/config";
+import { setUserId, setToken, setUsername,getUsername, setRefreshToken, } from "../config/config";
 import { Navigate } from "react-router";
 
 export default function Login() {
@@ -33,7 +33,7 @@ export default function Login() {
 
             if (data.refresh) {
                 setToken(data.access);
-
+                setRefreshToken(data.refresh);
                 // Decode JWT token to extract user details
                 const decodedToken = jwtDecode(data.refresh);
                 console.log("Decoded JWT:", decodedToken);
@@ -65,7 +65,7 @@ export default function Login() {
         }
     };
     if (redirect) {
-        
+        return <Navigate to={"/dashboard"}/>;
     }
 
     return (
