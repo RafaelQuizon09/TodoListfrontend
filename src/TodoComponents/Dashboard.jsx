@@ -127,39 +127,61 @@ export default function Dashboard() {
         setRefreshTodos((prev) => !prev); 
     };
     
-    return (
-        <div>
-            <h1 className="text-3xl font-bold underline">Home</h1>
-            <p>User ID: {userID}</p>
-            <p>Username: {userName}</p>
-            <CreateTodos addTodo={addTodo}/>
-            {loading ? <p>Loading...</p> : null}
-            {error ? <p>{error}</p> : null}
-            <div className="flex flex-row">
-                {todos.length > 0 ? (
-                    todos.map((todo) => (
-                        <div key={todo.todoID} className="p-5">
-                            <h3 className="">{todo.todoTitle}</h3>
-                            <p>{todo.todoDescription}</p>
-                            <p>Status: {todo.todoStatus}</p>
-                            <p>Due Date: {todo.dueDate}</p>
-                            <button onClick={() => openUpdateModal(todo)}>Edit</button>
-                            <button onClick={() => deleteTodo(todo.todoID)}>Delete</button>
-                        </div>
-                    ))
-                ) : (
-                    <p>No todos found</p>
+        return (
+            <div className="w-full h-full flex flex-col justify-center items-center parent">
+                <div className="flex flex-col justify-center items-center">
+                    <h1 className="text-3xl font-bold underline">Home</h1>
+                    <p>User ID: {userID}</p>
+                    <p>Username: {userName}</p>
+                    <CreateTodos addTodo={addTodo}/>
+                </div>
+                <div className="flex flex-col">
+                {loading ? <p>Loading...</p> : null}
+                {error ? <p>{error}</p> : null}
+                <div className="flex flex-row flex-wrap items-center justify-center">
+                    {todos.length > 0 ? (
+                        todos.map((todo) => (
+                            <div key={todo.todoID} className="p-10 max-h-80 max-w-80 card-bg m-5">
+                                <h3 className="py-2">{todo.todoTitle}</h3>
+                                <p className="py-2 flex flex-wrap">{todo.todoDescription}</p>
+                                <p className="py-2"> Status: {todo.todoStatus}</p>
+                                <p className="py-2">Due Date: {todo.dueDate}</p>
+                                <div className="flex flex-row"> 
+                                <button className="py-2 mx-2" onClick={() => openUpdateModal(todo)}>Edit</button>
+                                <button className="py-2 mx-2" onClick={() => deleteTodo(todo.todoID)}>Delete</button>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No todos found</p>
+                    )}
+                </div>
+                
+                {isUpdateModalOpen && (
+                    <UpdateTodos
+                        todo={selectedTodo}
+                        closeModal={() => setIsUpdateModalOpen(false)}
+                        updateTodo={updateTodo}
+                    />
                 )}
+                <style jsx>{
+                    `body {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    
+                    .card-bg{
+                        background-color: #007BFF;
+                        color: white;
+                    }
+                    .card-bg button{
+                    color: black;
+                    }`}
+                </style>
             </div>
-            
-            {isUpdateModalOpen && (
-                <UpdateTodos
-                    todo={selectedTodo}
-                    closeModal={() => setIsUpdateModalOpen(false)}
-                    updateTodo={updateTodo}
-                />
-            )}
-
-        </div>
+            </div>
     );
 }
