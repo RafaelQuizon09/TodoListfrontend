@@ -129,18 +129,17 @@ export default function Dashboard() {
     
     return (
         <div>
-            <h1>Home</h1>
+            <h1 className="text-3xl font-bold underline">Home</h1>
             <p>User ID: {userID}</p>
             <p>Username: {userName}</p>
-
+            <CreateTodos addTodo={addTodo}/>
             {loading ? <p>Loading...</p> : null}
             {error ? <p>{error}</p> : null}
-            <button onClick={testtoken}>Profile</button>
-            <div>
+            <div className="flex flex-row">
                 {todos.length > 0 ? (
                     todos.map((todo) => (
-                        <div key={todo.todoID}>
-                            <h3>{todo.todoTitle}</h3>
+                        <div key={todo.todoID} className="p-5">
+                            <h3 className="">{todo.todoTitle}</h3>
                             <p>{todo.todoDescription}</p>
                             <p>Status: {todo.todoStatus}</p>
                             <p>Due Date: {todo.dueDate}</p>
@@ -160,7 +159,7 @@ export default function Dashboard() {
                     updateTodo={updateTodo}
                 />
             )}
-            <CreateTodos addTodo={addTodo}/>
+
         </div>
     );
 }

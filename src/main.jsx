@@ -5,9 +5,9 @@ import './index.css';
 import App from './App.jsx';
 import Login from './AuthComponents/Login.jsx';
 import Signup from './AuthComponents/Signup.jsx';
-import ErrorLayout from './RootLayouts/errorLayout.jsx';
+import ErrorLayout from './RootLayouts/ErrorLayout.jsx';
 import Dashboard from './TodoComponents/Dashboard.jsx';
-import Profile from './TodoComponents/Profile.jsx'; // Create this component
+import Profile from './AuthComponents/Profile.jsx'; // Create this component
 
 const router = createBrowserRouter([
   {
