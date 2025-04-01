@@ -2,6 +2,7 @@ const config = {
     TOKEN_STORAGE_KEY: 'token',
     REFRESH_TOKEN_STORAGE_KEY: 'refreshToken',
     USERID_STORAGE_KEY: 'userId',
+    USEREMAIL_STORAGE_KEY: 'sample@email.com',
     USERNAME_STORAGE_KEY: 'username',
     PERMISSION_STORAGE_KEY: 'role',
     DEFAULT_TOKEN: '',
@@ -13,6 +14,10 @@ const config = {
 export const getUserId = () => localStorage.getItem(config.USERID_STORAGE_KEY) || config.DEFAULT_ID;
 export const setUserId = (id) => localStorage.setItem(config.USERID_STORAGE_KEY, id);
 export const clearUserId = () => localStorage.removeItem(config.USERID_STORAGE_KEY);
+
+export const getUserEmail = () => localStorage.getItem(config.USEREMAIL_STORAGE_KEY);
+export const setUserEmail = (email) => localStorage.setItem(config.USEREMAIL_STORAGE_KEY, email);
+export const clearUserEmail = () => localStorage.removeItem(config.USEREMAIL_STORAGE_KEY);
 
 export const getToken = () => localStorage.getItem(config.TOKEN_STORAGE_KEY) || config.DEFAULT_TOKEN;
 export const setToken = (token) => localStorage.setItem(config.TOKEN_STORAGE_KEY, token);
@@ -29,6 +34,7 @@ export const clearUsername = () => localStorage.removeItem(config.USERNAME_STORA
 export const clearAllAuthData = () => {
     clearUserId();
     clearUsername();
+    clearUserEmail();
     clearToken(); // 👈 Add this to make sure access token is cleared
     clearRefreshToken(); // 👈 This prevents keeping a stale refresh token
 };

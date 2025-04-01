@@ -53,47 +53,67 @@ export default function UpdateTodos ({todo, closeModal, updateTodo }) {
     }
 
     return <div>
-        
-        <div className="modal-overlay">
+                <div className="modal-overlay">
             <div className="modal-content">
-            <form onSubmit={handleUpdate}>
-            <input
-            type="text"
-            placeholder="To Do Description"
-            value={todoTitle}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            />
-            <textarea
-            placeholder="To Do Description"
-            value={todoDescription}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            />
-            <select value={todoStatus}
-            onChange={(e) => setStatus(e.target.value)} required>
-                <option value= "" disabled>Select Status</option>
-                <option value= "Pending" >Pending</option>
-                <option value= "In Progress" >In Progress</option>
-                <option value= "Complete" >Complete</option>
-            </select>
-            <input
-            type="date"
-            placeholder="To Do Title"
-            value={tododueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
-            />
-            <button type="submit">
+            <h1 className="text-md font-bold text-white mb-5">Update To-Do</h1>
+            <form onSubmit={handleUpdate} className="flex flex-col" style={{backgroundColor: "#1A5E63;"}}>
+                <div className="flex flex-col items-center">  
+                <div className="flex flex-row m-1" >
+                    <div className="flex flex-col">
+                        <h5 className="font-medium text-white text-lg">Title:</h5>   
+                        <input
+                        className="bg-white m-1 rounded-md h-full"
+                            type="text"
+                            placeholder="To Do Description"
+                            value={todoTitle}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            />
+                    </div>
+                    <div className="flex flex-col">
+                        <h5 className="font-medium text-white text-lg">Description:</h5>   
+                        <textarea
+                        className="bg-white m-1 rounded-md"
+                        style={{minHeight:"100px", maxHeight: "100px"}}
+                            placeholder="To Do Description"
+                            value={todoDescription}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                </div>
+                <div className="flex flex-row m-1">
+                    <div className="flex flex-col">
+                    <h5 className="font-medium text-white text-lg">Status:</h5>   
+                    <select value={todoStatus} className="bg-white m-1 rounded-md h-full"
+                        onChange={(e) => setStatus(e.target.value)} required>
+                            <option value= "" disabled>Select Status</option>
+                            <option value= "Pending" >Pending</option>
+                            <option value= "In Progress" >In Progress</option>
+                            <option value= "Complete" >Complete</option>
+                    </select>
+                    </div>
+                    <div className="flex flex-col">        
+                    <h5 className="font-medium text-white text-lg">Due Date:</h5>   
+                        <input
+                        className="bg-white m-1 rounded-md"
+                        type="date"
+                        value={tododueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                        required
+                    /></div>
+                </div>
+                </div>
+            <button type="submit" className="my-1 mx-20">
                 {error ? "Updating To-Do" : "Update"}
             </button>
             {error && <p style={{ color: "red" }}>{error}</p>}
+            <button className="my-1 mx-20" onClick={() => closeModal(true)}>Close</button>
         </form>
-        <button onClick={() => closeModal(true)}>Close</button>
     </div>
     </div>
-    <style>
-        {`
+    <style>{`
                 .modal-overlay {
                     position: fixed;
                     top: 0;
@@ -106,13 +126,15 @@ export default function UpdateTodos ({todo, closeModal, updateTodo }) {
                     align-items: center;
                 }
                 .modal-content {
-                    background: white;
+                    background: #1A5E63;
                     padding: 20px;
                     border-radius: 8px;
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
                     text-align: center;
+                    display: flex;
+                    flex-direction: column;
                 }
             `}
-            </style>
+    </style>
     </div>;
 }

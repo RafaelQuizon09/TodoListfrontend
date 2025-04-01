@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { getUserId, getToken } from "../config/config";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function CreateTodos({addTodo}) {
     const [todoTitle, setTitle] = useState("");
@@ -40,46 +41,70 @@ export default function CreateTodos({addTodo}) {
 
 
     return <div>
-        <div><button onClick={() => setOpen(true)}>Create To Do</button>{isOpen}</div>
-        <br />
+        <div className="flex flex-row w-full"><button className="w-full flex flex-row justify-center items-center" onClick={() => setOpen(true)}><FaPencilAlt className="mr-3"/>Create To Do</button>{isOpen}</div>
+        <br/>
         
         {isOpen && (
         <div className="modal-overlay">
             <div className="modal-content">
-            <form onSubmit={handleCreate}>
-            <input
-            type="text"
-            placeholder="To Do Description"
-            value={todoTitle}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            />
-            <textarea
-            placeholder="To Do Description"
-            value={todoDescription}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            />
-            <select value={todoStatus}
-            onChange={(e) => setStatus(e.target.value)} required>
-                <option value= "" disabled>Select Status</option>
-                <option value= "Pending" >Pending</option>
-                <option value= "In Progress" >In Progress</option>
-                <option value= "Complete" >Complete</option>
-            </select>
-            <input
-            type="date"
-            placeholder="To Do Title"
-            value={tododueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
-            />
-            <button type="submit">
+            <h1 className="text-3xl font-bold text-white mb-5">Create a To-Do</h1>
+            <form onSubmit={handleCreate} className="flex flex-col" style={{backgroundColor: "#1A5E63;"}}>
+                <div className="flex flex-col items-center">  
+                <div className="flex flex-row m-1" >
+                    <div className="flex flex-col">
+                        <h5 className="font-medium text-white text-lg">Title:</h5>   
+                        <input
+                        className="bg-white m-1 rounded-md h-full"
+                            type="text"
+                            placeholder="To Do Title"
+                            value={todoTitle}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            />
+                    </div>
+                    <div className="flex flex-col">
+                    <h5 className="font-medium text-white text-lg">Description:</h5>   
+                    <textarea
+                    className="bg-white m-1 rounded-md"
+                    style={{minHeight:"100px", maxHeight: "100px"}}
+                        placeholder="To Do Description"
+                        value={todoDescription}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                    </div>
+                </div>
+                <div className="flex flex-row m-1">
+                <div className="flex flex-col">
+                    <h5 className="font-medium text-white text-lg">Status:</h5>   
+                    <select value={todoStatus} className="bg-white m-1 rounded-md h-full"
+                        onChange={(e) => setStatus(e.target.value)} required>
+                            <option value= "" disabled>Select Status</option>
+                            <option value= "Pending" >Pending</option>
+                            <option value= "In Progress" >In Progress</option>
+                            <option value= "Complete" >Complete</option>
+                    </select>
+                    </div>
+                    <div className="flex flex-col">
+                    <h5 className="font-medium text-white text-lg">Due Date:</h5>   
+                        <input
+                            className="bg-white m-1 rounded-md h-full"
+                            type="date"
+                            value={tododueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
+
+                </div>
+            <button type="submit" className="my-1 mx-20">
                 {error ? "Creating To-Do" : "Create"}
             </button>
             {error && <p style={{ color: "red" }}>{error}</p>}
+            <button className="my-1 mx-20" onClick={() => setOpen(false)}>Close</button>
         </form>
-        <button onClick={() => setOpen(false)}>Close</button>
+
     </div>
     </div>
 
@@ -97,11 +122,13 @@ export default function CreateTodos({addTodo}) {
                     align-items: center;
                 }
                 .modal-content {
-                    background: white;
+                    background: #1A5E63;
                     padding: 20px;
                     border-radius: 8px;
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
                     text-align: center;
+                    display: flex;
+                    flex-direction: column;
                 }
             `}
             </style>

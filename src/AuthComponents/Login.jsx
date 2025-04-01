@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {jwtDecode} from "jwt-decode"; // Install with: npm install jwt-decode
-import { setUserId, setToken, setUsername,getUsername, setRefreshToken, } from "../config/config";
+import { setUserId, setToken, setUsername,getUsername, setRefreshToken, setUserEmail } from "../config/config";
 import { Navigate } from "react-router";
+import { Link } from "react-router";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -45,6 +46,7 @@ export default function Login() {
                         console.log("User data:", data);
                         setUserId(decodedToken.user_id);
                         setUsername(data.username);
+                        setUserEmail(email);
                         
                         setTimeout(() => {
                             setRedirect(true);
@@ -69,27 +71,50 @@ export default function Login() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="email"
-                placeholder="Input Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-            />
-            <input
-                type="password"
-                placeholder="Input Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
-            />
-            <button type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
-            </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-        </form>
+        <div>
+            <form onSubmit={handleSubmit} className="flex flex-col p-30 rounded-lg" style={{backgroundColor: "#007BFF"}}>
+                <h1 className="font-semibold text-white text-sm my-3">Login</h1>
+                <h5 className="font-medium text-white text-lg">Email:</h5>
+                <input
+                    type="email"
+                    className="bg-white mb-3 rounded-md"
+                    placeholder="Input Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={loading}
+                />
+                <h5 className="font-medium text-white text-lg">Password:</h5>
+                <input
+                    type="password"
+                    className="bg-white mb-7 rounded-md"
+                    placeholder="Input Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={loading}
+                />
+                <button type="submit" disabled={loading} className=" my-2">
+                    {loading ? "Logging in..." : "Login"}
+                </button>
+                <div className="flex flex-row mt-2 text-sm justify-center">
+                Don't have an account? <Link to="/signup"><div className="font-bold text-white ml-2">Register</div></Link>
+            </div>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+            </form>
+            <style>{
+                    `body {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        background-color: #0B132B;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    input {
+                    padding: 8px; 
+                    }`}
+                </style>
+        </div>
     );
 }
